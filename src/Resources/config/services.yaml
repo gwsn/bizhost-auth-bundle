@@ -1,0 +1,45 @@
+parameters:
+    env(BIZHOST_AUTH_ISSUER_META_DATA_PATH): '/.well-known/oauth-authorization-server'
+    bizhost.auth.apiUrl: "%env(resolve:BIZHOST_AUTH_API_URL)%"
+    bizhost.auth.clientId: "%env(resolve:BIZHOST_AUTH_CLIENT_ID)%"
+    bizhost.auth.clientSecret: "%env(resolve:BIZHOST_AUTH_CLIENT_SECRET)%"
+    bizhost.auth.redirectUrl: "%env(resolve:BIZHOST_AUTH_REDIRECT_URL)%"
+    bizhost.auth.issuerMetaDataPath: "%env(resolve:BIZHOST_AUTH_ISSUER_META_DATA_PATH)%"
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    bizhost.auth.config:
+      class: Bizhost\Authentication\Adapter\Client\AuthClientConfig
+      arguments:
+        $apiUrl: '%bizhost.auth.apiUrl%'
+        $clientId: '%bizhost.auth.clientId%'
+        $clientSecret: '%bizhost.auth.clientSecret%'
+        $redirectUrl: '%bizhost.auth.redirectUrl%'
+        $issuerMetaDataPath: '%bizhost.auth.issuerMetaDataPath%'
+
+    Bizhost\Authentication\Adapter\Authenticate\Service\AuthenticateService:
+      arguments:
+        $config: '@bizhost.auth.config'
+
+    Bizhost\Authentication\Adapter\Account\Service\AccountService:
+      public: false
+      arguments:
+        $config: '@bizhost.auth.config'
+
+    Bizhost\Authentication\Adapter\Token\Service\TokenService:
+      arguments:
+        $config: '@bizhost.auth.config'
+
+    Bizhost\Authentication\Bundle\Service\AccountService:
+      arguments:
+        $config: '@bizhost.auth.config'
+
+    Bizhost\Authentication\Bundle\Authenticate\AuthenticatedAccountProvider:
+
+    Bizhost\Authentication\Bundle\Authenticate\BizhostAuthAuthenticator:
+
+    Bizhost\Authentication\Bundle\Authenticate\BizhostAuthAccessTokenAuthenticator:
