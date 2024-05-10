@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e596c45a1771fe70f076049188a38128",
+    "content-hash": "67c9d5acb284830ca1dd187daa02b4b9",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -396,16 +396,16 @@
         },
         {
             "name": "gwsn/bizhost-auth-sdk",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gwsn/bizhost-auth-sdk.git",
-                "reference": "fc39a643d83a776d88df275a2cb85bb11b6c01a3"
+                "reference": "7e4ab119478553f676070dbda63d5037a0b81914"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gwsn/bizhost-auth-sdk/zipball/fc39a643d83a776d88df275a2cb85bb11b6c01a3",
-                "reference": "fc39a643d83a776d88df275a2cb85bb11b6c01a3",
+                "url": "https://api.github.com/repos/gwsn/bizhost-auth-sdk/zipball/7e4ab119478553f676070dbda63d5037a0b81914",
+                "reference": "7e4ab119478553f676070dbda63d5037a0b81914",
                 "shasum": ""
             },
             "require": {
@@ -444,9 +444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/gwsn/bizhost-auth-sdk/issues",
-                "source": "https://github.com/gwsn/bizhost-auth-sdk/tree/1.0.2"
+                "source": "https://github.com/gwsn/bizhost-auth-sdk/tree/1.0.3"
             },
-            "time": "2024-05-10T12:32:36+00:00"
+            "time": "2024-05-10T13:41:09+00:00"
         },
         {
             "name": "psr/clock",
