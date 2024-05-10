@@ -25,20 +25,18 @@ class BizhostAuthAuthenticator implements AuthenticatorInterface, Authentication
 {
 
     public function __construct(
-        private AuthenticateService $authService,
-        private AccountService $accountService,
-        private LoggerInterface $logger
+        private readonly AuthenticateService $authService,
+        private readonly AccountService      $accountService,
+        private readonly LoggerInterface     $logger
     )
     {
     }
 
     public function start(Request $request, AuthenticationException $authException = null): Response
     {
-        if($authException !== null && !$authException instanceof InsufficientAuthenticationException) {
+        if ($authException !== null && ! $authException instanceof InsufficientAuthenticationException) {
             $this->logger->error($authException->getMessage());
-            dd($authException);
         }
-
 
         // Redirect user to oAuth2 login page
         return new RedirectResponse($this->authService->generateCodeFlowUrl());
@@ -46,7 +44,7 @@ class BizhostAuthAuthenticator implements AuthenticatorInterface, Authentication
 
     public function supports(Request $request): ?bool
     {
-        return $request->query->has('code');
+        return $request->query->has('code') && $request->query->has('state');
     }
 
     public function authenticate(Request $request): Passport
@@ -55,14 +53,14 @@ class BizhostAuthAuthenticator implements AuthenticatorInterface, Authentication
         /* @var $tokenObject Token */
         $tokenObject = $this->authService->getAccessTokenByCodeFlow($code);
 
-        if($tokenObject === null) {
+        if ($tokenObject === null) {
             // Redirect user to oAuth2 login page
             throw new AuthenticationException('Invalid code');
         }
 
         return new SelfValidatingPassport(
             new UserBadge($tokenObject->getDecoded()->sub,
-                function() use ($tokenObject) {
+                function () use ($tokenObject) {
                     return $this->getCurrentUser($tokenObject);
                 }
             ),
@@ -72,7 +70,8 @@ class BizhostAuthAuthenticator implements AuthenticatorInterface, Authentication
         );
     }
 
-    public function getCurrentUser(Token $tokenObject): AuthenticatedAccount {
+    public function getCurrentUser(Token $tokenObject): AuthenticatedAccount
+    {
         $this->accountService->setAccessToken($tokenObject->getAccessToken());
 
         return new AuthenticatedAccount($this->accountService->getCurrentAccount(), $tokenObject);
