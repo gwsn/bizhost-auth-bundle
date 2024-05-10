@@ -12,10 +12,7 @@ class AuthenticatedAccountProvider implements UserProviderInterface
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        // Load a User object from your data source or throw UsernameNotFoundException.
-        // The $identifier argument may not actually be a username:
-        // it is whatever is being returned by the getUserIdentifier() method above.
-        throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
+        throw new \Exception('loadUserByIdentifier is not implemented as it is preAuthenticated '.__FILE__);
     }
 
     /**

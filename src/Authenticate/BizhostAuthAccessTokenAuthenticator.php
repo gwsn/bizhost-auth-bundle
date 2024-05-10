@@ -9,12 +9,6 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
-/**
- * @author Wouter de Jong <wouter@wouterj.nl>
- * @author Fabien Potencier <fabien@symfony.com>
- *
- * @final
- */
 class BizhostAuthAccessTokenAuthenticator implements AccessTokenHandlerInterface
 {
     public function __construct(

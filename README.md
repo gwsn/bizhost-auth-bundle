@@ -54,7 +54,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: ^(/account|/auth)
+            pattern: ^/(account|auth)
             stateless: false
             custom_authenticators:
               - Bizhost\Authentication\Bundle\Authenticate\BizhostAuthAuthenticator
@@ -76,11 +76,11 @@ security:
     enable_authenticator_manager: true
 
     firewalls:
-        api:
-            pattern: ^/api
-            stateless: true
-            custom_authenticators:
-              - Bizhost\Authentication\Bundle\Authenticate\BizhostAuthAccessTokenAuthenticator
+      api:
+         pattern: ^/api
+         stateless: true
+         access_token:
+           token_handler: Bizhost\Authentication\Bundle\Authenticate\BizhostAuthAccessTokenAuthenticator
 
     access_control:
          - { path: ^/api, roles: ROLE_USER }
@@ -95,6 +95,38 @@ When authentication is successful it will redirect the user to /auth/success,
 you should add route to handle this in your `config/routes.yaml` or in one of `config/routes/*.yaml` files:
 
 It is also good practice to add a logout route to handle the logout of the user.
+    
+``` yaml
+auth.callback:
+    path: /auth/callback
+    controller: App\Authentication\Controller\AuthController::handleCallback
+    methods: [ GET ]
+
+auth.login.success:
+    path: /auth/success
+    controller: App\Authentication\Controller\AuthController::handleSuccess
+    methods: [ GET ]
+```
+
+### Controller
+Create a controller that will handle the callback and success route.
+
+``` php
+<?php
+
+class AuthController extends AbstractController
+{
+    public function handleSuccess(): Response
+    {
+        return new RedirectResponse('/home');
+    }
+
+    public function handleCallback(): Response
+    {
+        return new RedirectResponse('/home');
+    }
+}
+```
 
 ### Environment Variables
 The bundle expect the following environment variables to be set with the correct values:
