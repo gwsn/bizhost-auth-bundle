@@ -396,16 +396,16 @@
         },
         {
             "name": "gwsn/bizhost-auth-sdk",
-            "version": "1.0.3",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gwsn/bizhost-auth-sdk.git",
-                "reference": "7e4ab119478553f676070dbda63d5037a0b81914"
+                "reference": "8ede09ede923315242fc21916773fcf19ee1da50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gwsn/bizhost-auth-sdk/zipball/7e4ab119478553f676070dbda63d5037a0b81914",
-                "reference": "7e4ab119478553f676070dbda63d5037a0b81914",
+                "url": "https://api.github.com/repos/gwsn/bizhost-auth-sdk/zipball/8ede09ede923315242fc21916773fcf19ee1da50",
+                "reference": "8ede09ede923315242fc21916773fcf19ee1da50",
                 "shasum": ""
             },
             "require": {
@@ -444,9 +444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/gwsn/bizhost-auth-sdk/issues",
-                "source": "https://github.com/gwsn/bizhost-auth-sdk/tree/1.0.3"
+                "source": "https://github.com/gwsn/bizhost-auth-sdk/tree/1.0.5"
             },
-            "time": "2024-05-10T13:41:09+00:00"
+            "time": "2024-05-10T14:29:49+00:00"
         },
         {
             "name": "psr/clock",

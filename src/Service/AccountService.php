@@ -6,6 +6,8 @@ use Bizhost\Authentication\Adapter\Account\Model\Account;
 use Bizhost\Authentication\Adapter\Account\Service\AccountApiClient;
 use Bizhost\Authentication\Adapter\Account\Service\AccountService as MainAccountService;
 use Bizhost\Authentication\Adapter\Client\AuthClientConfig;
+use Bizhost\Authentication\Adapter\Token\Model\AccessToken;
+use Bizhost\Authentication\Adapter\Token\Service\TokenService;
 use Bizhost\Authentication\Bundle\Model\AuthenticatedAccount;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -22,24 +24,34 @@ class AccountService extends MainAccountService
     }
     public function getCurrentAccount(): Account
     {
-        $account = $this->getAuthorizedAccount();
-        $this->setAccessToken($account->getAccessToken());
+        $authenticatedAccount = $this->getAuthorizedAccount();
 
-        return parent::getCurrentAccount();
+        return $this->getAccountByUuid($authenticatedAccount->getAccount()->getUuid());
+    }
+
+    public function getAccountByAccessToken(string $accessToken): AuthenticatedAccount
+    {
+        $tokenService = new TokenService($this->config);
+        $token = new AccessToken($accessToken, $tokenService->decodeAccessToken($accessToken));
+
+        $this->setAccessToken($accessToken);
+        $account = parent::getCurrentAccount();
+
+        return new AuthenticatedAccount($account, $token);
     }
 
     public function getAccountByUuid(string $uuid): Account
     {
-        $account = $this->getAuthorizedAccount();
-        $this->setAccessToken($account->getAccessToken());
+        $authenticatedAccount = $this->getAuthorizedAccount();
+        $this->setAccessToken($authenticatedAccount->getAccessToken());
 
         return parent::getAccountByUuid($uuid);
     }
 
     public function updateAccount(Account $account): Account
     {
-        $account = $this->getAuthorizedAccount();
-        $this->setAccessToken($account->getAccessToken());
+        $authenticatedAccount = $this->getAuthorizedAccount();
+        $this->setAccessToken($authenticatedAccount->getAccessToken());
 
         return parent::updateAccount($account);
     }
